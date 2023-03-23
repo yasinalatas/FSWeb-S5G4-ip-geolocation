@@ -13449,6 +13449,15 @@ function ipAdresimiAl() {
 	NOT: Bilgisayarın IP adresini öğrenmek için: https://apis.ergineer.com/ipadresim 
 	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
 */
+// ------------ değiştirmeyin --------------
+/*
+	ADIM 1: axios kullanarak, aşağıdaki URL'ye GET sorgusu atacağız
+    (tag içindeki yere kendi ipnizi yazarak URL'yi oluşturun):
+    https://apis.ergineer.com/ipgeoapi/<ipniz>
+	
+	NOT: Bilgisayarın IP adresini öğrenmek için: https://apis.ergineer.com/ipadresim 
+	ADIM 5'e gelene kadar fonksiyonunuzu test etmek için ip nizi URL'ye manuel olarak ekleyebilirsiniz.
+*/
 function _ipAdresimiAl() {
   _ipAdresimiAl = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
     return _regeneratorRuntime().wrap(function _callee$(_context) {
@@ -13471,10 +13480,10 @@ function _ipAdresimiAl() {
   }));
   return _ipAdresimiAl.apply(this, arguments);
 }
-_axios.default.get("https://apis.ergineer.com/ipgeoapi/<95.70.234.14>").then(function (response) {
-  var ipGeoData = response.data;
+_axios.default.get("https://apis.ergineer.com/ipgeoapi/".concat(benimIP)).then(function (reponse) {
+  console.log(response); //success
 }).catch(function (error) {
-  console.log(err);
+  console.log(error); //error
 });
 
 /*
@@ -13482,8 +13491,6 @@ _axios.default.get("https://apis.ergineer.com/ipgeoapi/<95.70.234.14>").then(fun
 	iyice anlamanız gerekmektedir.
 	
 */
-
-console.log(ipGeoData);
 
 /*
 	ADIM 3: Argümanı sadece 1 nesne kabül eden bir fonksiyon oluşturun.
@@ -13503,39 +13510,39 @@ console.log(ipGeoData);
     </div>
 */
 
-function ipGeoFunc(geoObj) {
+function ipGetir(obj) {
   var cardbox = document.createElement("div");
   cardbox.classList.add("card");
-  var imgsec = document.createElement("img");
-  imgsec.src = "{ülke bayrağı url}";
-  var infobox = document.createElement("div");
-  infobox.classList.add("card-info");
-  var ipbaslik = document.createElement("h3");
-  ipbaslik.classList.add("ip");
-  ipbaslik.textContent("{ip adresi}");
-  var paragraf1 = document.createElement("p");
-  paragraf1.classList.add("ulke");
-  paragraf1.textContent("{ülke bilgisi (ülke kodu)}");
-  var paragraf2 = document.createElement("p");
-  paragraf2.textContent("Enlem: {enlem} Boylam: {boylam}");
-  var paragraf3 = document.createElement("p");
-  paragraf3.textContent("Şehir: {şehir}");
-  var paragraf4 = document.createElement("p");
-  paragraf4.textContent("Saat dilimi: {saat dilimi}");
-  var paragraf5 = document.createElement("p");
-  paragraf5.textContent("Para birimi: {para birimi}");
-  var paragraf6 = document.createElement("p");
-  paragraf6.textContent("ISP: {isp}");
-  infobox.appendChild(ipbaslik);
-  infobox.appendChild(paragraf1);
-  infobox.appendChild(paragraf2);
-  infobox.appendChild(paragraf3);
-  infobox.appendChild(paragraf4);
-  infobox.appendChild(paragraf5);
-  infobox.appendChild(paragraf6);
-  body.appendChild(cardbox);
-  body.appendChild(imgsec);
-  body.appendChild(ingobox);
+  var imgbox = document.createElement("img");
+  imgbox.setAttribute("src", "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Flag_of_Turkey.svg/330px-Flag_of_Turkey.svg.png");
+  var cardInfoSelect = document.createElement("div");
+  cardInfoSelect.setAttribute("class", "card-info");
+  var ipSelect = document.createElement("h3");
+  ipSelect.setAttribute("class", "ip");
+  ipSelect.textContent = obj.sorgu;
+  var ulkeSelect = document.createElement("p");
+  ulkeSelect.setAttribute("class", "ulke");
+  ulkeSelect.textContent = obj.ülke + " " + obj.ülkeKodu;
+  var p1 = document.createElement("p");
+  p1.textContent = "Enlem: ".concat(obj.enlem) + "Boylam: ".concat(obj.boylam);
+  var p2 = document.createElement("p");
+  p2.textContent = "\u015Eehir: ".concat(obj.şehir);
+  var p3 = document.createElement("p");
+  p3.textContent = "Saat Dilimi: ".concat(obj.saatdilimi);
+  var p4 = document.createElement("p");
+  p4.textContent = "Para Birimi: ".concat(obj.parabirimi);
+  var p5 = document.createElement("p");
+  p5.textContent = "ISP: ".concat(obj.isp);
+  document.querySelector("body").appendChild(cardbox);
+  cardbox.appendChild(imgbox);
+  document.querySelector(".card").appendChild(cardInfoSelect);
+  cardInfoSelect.appendChild(ipSelect);
+  cardInfoSelect.appendChild(ulkeSelect);
+  cardInfoSelect.appendChild(p1);
+  cardInfoSelect.appendChild(p2);
+  cardInfoSelect.appendChild(p3);
+  cardInfoSelect.appendChild(p4);
+  cardInfoSelect.appendChild(p5);
 }
 
 /*
@@ -13552,6 +13559,33 @@ function ipGeoFunc(geoObj) {
 */
 
 //kodlar buraya gelecek
+function setCardData() {
+  return _setCardData.apply(this, arguments);
+}
+function _setCardData() {
+  _setCardData = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+    return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+      while (1) switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.next = 2;
+          return ipAdresimiAl();
+        case 2:
+          //IP gelir
+          _axios.default.get("https://apis.ergineer.com/ipgeoapi/".concat(benimIP)).then(function (response) {
+            console.log(response);
+            ipGetir(response.data);
+          }).catch(function (error) {
+            console.log(error);
+          });
+        case 3:
+        case "end":
+          return _context2.stop();
+      }
+    }, _callee2);
+  }));
+  return _setCardData.apply(this, arguments);
+}
+setCardData();
 },{"axios":"node_modules/axios/index.js","babel-core/register":"node_modules/babel-core/register.js","babel-polyfill":"node_modules/babel-polyfill/lib/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -13577,7 +13611,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53784" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55268" + '/');
   ws.onmessage = function (event) {
     checkedAssets = {};
     assetsToAccept = [];
